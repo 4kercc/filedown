@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<script async src="cdn-cgi/bm/cv/669835187/api.js" tppabs="https://download.ovor.cc/cdn-cgi/bm/cv/669835187/api.js"></script></head>
+<body>
+<div class="container">
+</div>
+<script type="text/javascript">(function(){window['__CF$cv$params']={r:'669d0ec2ead6323a',m:'ba3f1af5fdc92329cc1f841f8258e058132e3361-1625451034-1800-AasOODGlRKSTeqZnJbR7zqQ79jfOsy/3YraCurjMUvTb7ygBFcSnhxsqdJc0QtiXGyKcgkV7G7zoojF8d0Co0UGIaCQbKRedoWqp0amy5px4JkYEHBkj6Odf9BofxYtSYQ==',s:[0x8db46c8b77,0x4c1dbe7c2f],}})();</script><script defer src="../static.cloudflareinsights.com/beacon.min.js" tppabs="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"rayId":"669d0ec2ead6323a","version":"2021.6.0","r":1,"token":"ee53b8fe5f944bb1893f912608bf738d","si":10}'></script>
+</body>
+<script>
+    let isFetchedConfig = false
+    let config = {}
+    const lib = "https://cdn.jsdelivr.net/gh/inhibitwall/ssr-download@master/"
+    async function downloader(z) {
+        window.alert(`该软件需要下载${z.length}个分卷，请您允许弹出窗口和重定向`)
+        for(i = 0; i < z.length; i++ ){
+            window.open(lib+z[i])
+            await sleep(1000)
+        }
+    }
+
+    function sleep(ms){
+        return new Promise((resolve)=>setTimeout(resolve,ms));
+    }
+    window.onload = detectUA()
+    window.onload = beginFetch()
+    function beginFetch() {
+        fetch(lib + "config/config.json")
+        .then(function(response) {
+            return response.json()
+        }, reject => window.alert("获取最新客户端失败"))
+        .then(function(c) {
+            config = c
+            isFetchedConfig = true
+        })
+        .catch(err => window.alert("获取最新客户端失败"))
+    }
+    function detectUA() {
+        const t = UA()
+        if (t["android"]) {
+            window.location.hash = "Android"
+        } else if (t["windows"]) {
+            window.location.hash = "Windows"
+        } else if (t["mac"]){
+            window.location.hash = "macOS"
+        }
+    }
+
+    function UA() {
+        const u = navigator.userAgent
+        return {
+            android: u.indexOf('Android') !== -1,
+            windows: u.indexOf('Windows NT') !== -1,
+            mac: u.indexOf('Mac') !== -1
+        }
+    }
+
+    function download(s, a) {
+        let z = config["clients"][s][a]
+        if (s == "Android") {
+            window.open(lib + z["arm64"])
+        } else {
+            if (typeof(z) == "string") {
+                window.open(lib + z)
+            } else {
+                downloader(z)
+            }
+        }
+    }
+
+    function detectAndDownload(a, s) {
+        if (!isFetchedConfig) {
+            beginFetch()
+        }
+        if (!s) {
+            const t = UA()
+            if (t["android"]) {
+                s = "Android"
+            } else if (t["windows"]) {
+                s = "Windows"
+            } else if (t["mac"]){
+                s = "macOS"
+            } else {
+                window.location.hash = "/"
+                return
+            }
+        }
+        console.log(s)
+        download(s, a)
+    }
+    class RouterClass {
+        constructor() {
+            this.routes = {}
+            this.currentUrl = ""
+            window.addEventListener("load", () => this.render())
+            window.addEventListener("hashchange", () => this.render())
+        }
+        static init() {
+            window.Router = new RouterClass()
+        }
+
+        route(path, cb) {
+            this.routes[path] = cb || function() {}
+        }
+
+        render() {
+            this.currentUrl = window.location.hash.slice(1) || "/"
+            this.routes[this.currentUrl]()
+        }
+    }
+
+    RouterClass.init()
+    const ContentDOM = document.querySelector(".container")
+    const changeContent = content => (ContentDOM.innerHTML = content)
+
+    Router.route("/", () => changeContent(`
+    <div class="box">
+    <a href="#Windows">
+    <div class="img">
+    <img src="icos/windows.svg"/*tpa=https://download.ovor.cc/icos/windows.svg*//>
+    </div>
+    </a>
+    <p>
+    <a href="#Windows">Windows</a>
+    </p>
+    </div>
+    <div class="box">
+    <a href="#Android">
+    <div class="img">
+    <img src="icos/android.svg"/*tpa=https://download.ovor.cc/icos/android.svg*//>
+    </div>
+    </a>
+    <p>
+    <a href="#Android">Android</a>
+    </p>
+    </div>
+    <div class="box">
+    <a href="#macOS">
+    <div class="img">
+    <img src="icos/mac.svg"/*tpa=https://download.ovor.cc/icos/mac.svg*//>
+    </div>
+    </a>
+    <p>
+    <a href="#macOS">macOS</a>
+    </p>
+    </div>
+
+    `))
+    Router.route("macOS", () => changeContent(`
+    <a class="box" href="ClashX.dmg"/*tpa=https://download.ovor.cc/download/cx*/>
+    <div class="img">
+    <img src="icos/clash.webp"/*tpa=https://download.ovor.cc/icos/clash.webp*//>
+    </div>
+    <p>Clash</p>
+    </a>
+    
+     <a class="box" href="V2rayU.dmg"/*tpa=https://download.ovor.cc/download/cx*/>
+    <div class="img">
+    <img src="icos/v2rayu.png"/*tpa=https://download.ovor.cc/icos/clash.webp*//>
+    </div>
+    <p>V2rayU</p>
+    </a>
+
+    <div class="box">
+    <a href="#">
+    <div class="img"><img src="icos/settings.svg"/*tpa=https://download.ovor.cc/icos/settings.svg*//></div>
+    </a>
+    <p><a href="#">返回</a></p>
+    </div>
+    `))
+	
+	    Router.route("IOS", () => changeContent(`
+    <a class="box" href="/"/*tpa=https://download.ovor.cc/download/cx*/>
+    <div class="img">
+    <img src="icos/clash.webp"/*tpa=https://download.ovor.cc/icos/clash.webp*//>
+    </div>
+    <p>Clash</p>
+    </a>
+    
+    <div class="box">
+    <a href="#">
+    <div class="img"><img src="icos/settings.svg"/*tpa=https://download.ovor.cc/icos/settings.svg*//></div>
+    </a>
+    <p><a href="#">返回</a></p>
+    </div>
+    `))
+	
+    Router.route("Windows", () => changeContent(`
+    <a class="box" href="Clash.for.Windows.Setup.exe"/*tpa=https://download.ovor.cc/download/cfw*/>
+    <div class="img">
+    <img src="icos/clash.webp"/*tpa=https://download.ovor.cc/icos/clash.webp*//>
+    </div>
+    <p>Clash</p>
+    </a>
+    
+    <a class="box" href="Netch.7z"/*tpa=https://download.ovor.cc/download/netch*/>
+    <div class="img">
+    <img src="icos/netch.webp"/*tpa=https://download.ovor.cc/icos/netch.webp*//>
+    </div>
+    <p>Netch</p>
+    </a>
+    
+        <a class="box" href="winxray3.7.zip"/*tpa=https://download.ovor.cc/download/netch*/>
+    <div class="img">
+    <img src="icos/xray.png"/*tpa=https://download.ovor.cc/icos/netch.webp*//>
+    </div>
+    <p>Winxray</p>
+    </a>
+
+    <a class="box" href="SSTap.zip"/*tpa=https://download.ovor.cc/download/sstap*/>
+    <div class="img">
+    <img src="icos/sstap.webp"/*tpa=https://download.ovor.cc/icos/sstap.webp*//>
+    </div>
+    <p>SSTap</p>
+    </a>
+    
+    <div class="box">
+    <a href="#">
+    <div class="img"><img src="icos/settings.svg"/*tpa=https://download.ovor.cc/icos/settings.svg*//></div>
+    </a>
+    <p><a href="#">返回</a></p>
+    </div>
+    `))
+    Router.route("Android", () => changeContent(`
+    <a class="box" href="clash.apk"/*tpa=https://download.ovor.cc/download/cfa*/>
+    <div class="img">
+    <img src="icos/clash.webp"/*tpa=https://download.ovor.cc/icos/clash.webp*//>
+    </div>
+    <p>Clash</p>
+    </a>
+    
+    <a class="box" href="shadowsocksr-android.apk"/*tpa=https://download.ovor.cc/download/ssra*/>
+    <div class="img">
+    <img src="icos/ssr.webp"/*tpa=https://download.ovor.cc/icos/ssr.webp*//>
+    </div>
+    <p>ShadowsocksR</p>
+    </a>
+
+        <a class="box" href="v2rayng.apk"/*tpa=https://download.ovor.cc/download/ssra*/>
+    <div class="img">
+    <img src="icos/v2rayng (2).webp"/*tpa=https://download.ovor.cc/icos/ssr.webp*//>
+    </div>
+    <p>V2rayNG</p>
+    </a>
+    
+    <div class="box">
+    <a href="#">
+    <div class="img"><img src="icos/settings.svg"/*tpa=https://download.ovor.cc/icos/settings.svg*//></div>
+    </a>
+    <p><a href="#">返回</a></p>
+    </div>
+    `))
+    Router.route("Clash", () => detectAndDownload("Clash"))
+    Router.route("Netch", () => detectAndDownload("Netch"))
+    Router.route("SSTAP", () => detectAndDownload("SSTAP"))
+    Router.route("SSR",() => detectAndDownload("ShadowsocksR"))
+</script>
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+}
+body{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #efeeee;
+}
+
+a{
+    color: slategrey;
+    text-decoration:none;
+}
+.container{
+    width: 700px;
+    height: 600px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.container .box{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    width: 100px;
+    height: 140px;
+    margin: 20px;
+}
+.container .box .img{
+    width: 100px;
+    height: 100px;
+    box-shadow: 18px 18px 30px rgba(0, 0, 0, 0.1),
+    -18px -18px 30px rgba(255, 255, 255, 1);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #efeeee;
+    transition: box-shadow .2s ease-out;
+    position: relative;
+}
+
+.container .box .img  img{
+    width: 60px;
+    transition: width 0.2s ease-out;
+}
+.container .box .img:hover{
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2),
+    0px 0px 0px rgba(255, 255, 255, 0.8),
+    inset 18px 18px 30px rgba(0, 0, 0, 0.1),
+    inset -18px -18px 30px rgba(255, 255, 255, 1);
+    transition: box-shadow .2s ease-out;
+}
+.container .box .img:hover img{
+    width: 58px;
+    transition: width 0.2s ease-out;
+}
+</style>
+</html>
